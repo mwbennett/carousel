@@ -1,24 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import _ from 'lodash';
+
+import UnsplashAPI from './api/Unsplash.js';
+import Carousel from './components/Carousel.js';
 import './App.css';
 
+
 function App() {
+  const unsplashAPI = UnsplashAPI();
+  const [images, setImages] = useState([]);
+  const [nextPage, setNextPage] = useState(1);
+
+  const fetchImages = async () => {
+    const newImages = await unsplashAPI.fetchImages(nextPage);
+    setImages((prevImages => prevImages.concat(newImages)));
+    setNextPage((nextPage) => nextPage += 1);
+  }
+
+  const possibleFetchImageDetails = async (imageID) => {
+    // MB TODO: Inefficient!
+    const image = _.find(images, { id: imageID });
+    if (!image || image.hasDetails) {
+      return;
+    }
+
+    const imageDetails = await unsplashAPI.getImageDetail(imageID);
+    const { views, likes, downloads } = imageDetails;
+
+    setImages((prevImages) => prevImages.map((image)=> (
+      image.id === imageID 
+        ? {
+          ...image,
+          hasDetails: true,
+          views,
+          likes,
+          downloads,
+        }
+        : image
+    )));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header">Unsplash Carousel</header>
+      <Carousel
+        images={images}
+        loadNewImages={fetchImages}
+        onNewImageSelected={possibleFetchImageDetails}
+      />
     </div>
   );
 }
