@@ -18,12 +18,14 @@ function App() {
   }
 
   const possibleFetchImageDetails = async (imageID) => {
+    // If we already have the image details, no need to duplicate the call.
     // MB TODO: Inefficient!
     const image = _.find(images, { id: imageID });
     if (!image || image.hasDetails) {
       return;
     }
 
+    // Otherwise, let's fetch the meta data we need.
     const imageDetails = await unsplashAPI.getImageDetail(imageID);
     const { views, likes, downloads } = imageDetails;
 

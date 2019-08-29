@@ -6,7 +6,7 @@ import SelectedImage from './SelectedImage.js';
 
 const prevNextStyles = cxs({
   cursor: 'pointer',
-  width: '100%',
+  maxWidth: '100%',
 })
 
 /**
@@ -36,6 +36,8 @@ const Carousel = ({ images, loadNewImages, onNewImageSelected }) => {
     onNewImageSelected(selectedImageId);
   }, [onNewImageSelected, selectedImageId])
 
+
+  /* Click handlers */
   const onClickPrev = () => {
     setSelectedImageIndex((selectedImageIndex) => selectedImageIndex - 1);
   }
@@ -45,24 +47,21 @@ const Carousel = ({ images, loadNewImages, onNewImageSelected }) => {
   }
 
   return (
-    <div>
-      <Flex w={1} align='center' justify='space-between'>
-        <Box w={1/4} px={2} className={prevNextStyles}>
-          {prevImage && (
-            <img style={{maxWidth: '100%'}} src={prevImage.urls.small} alt={prevImage.name} onClick={onClickPrev} />
-          )}
-        </Box>
-        <Box w={1/2} px={2}>
-          <SelectedImage image={selectedImage} />
-        </Box>
-        <Box w={1/4} px={2} className={prevNextStyles}>
-          {nextImage && (
-            <img style={{maxWidth: '100%'}} src={nextImage.urls.small} alt={nextImage.name} onClick={onClickNext} />
-          )}
-        </Box>
-      </Flex>
-      
-    </div>
+    <Flex w={1} p={1} align='center' justify='space-between'>
+      <Box w={[1/4, 1/6]} px={2} className={prevNextStyles}>
+        {prevImage && (
+          <img style={{maxWidth: '100%'}} src={prevImage.urls.small} alt={prevImage.name} onClick={onClickPrev} />
+        )}
+      </Box>
+      <Box w={[1/2, 2/3]} px={2}>
+        <SelectedImage image={selectedImage} />
+      </Box>
+      <Box w={[1/4, 1/6]} px={2} className={prevNextStyles}>
+        {nextImage && (
+          <img style={{maxWidth: '100%'}} src={nextImage.urls.small} alt={nextImage.name} onClick={onClickNext} />
+        )}
+      </Box>
+    </Flex>
   )
 }
 

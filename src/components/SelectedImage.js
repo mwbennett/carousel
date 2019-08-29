@@ -11,7 +11,7 @@ const SelectedImage = ({ image }) => {
       {image ? (
         <div>
           <img style={{maxWidth: '100%'}} src={image.urls.regular} alt={image.name} />
-          <Flex>
+          <Flex w={1}>
             <Box w={1/3} p={1}>{image.views ? <div>Views: {image.views}</div> : null}</Box>
             <Box w={1/3} p={1}>{image.likes ? <div>Likes: {image.likes}</div> : null}</Box>
             <Box w={1/3} p={1}>{image.downloads ? <div>Downloads: {image.downloads}</div> : null}</Box>

@@ -4,6 +4,7 @@
 
 .App-header {
   background-color: #282c34;
+  margin-bottom: 2em;
   height: 2em;
   display: flex;
   flex-direction: column;
