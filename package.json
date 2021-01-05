@@ -30,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cxs": "^6.2.0",
     "lodash": "^4.17.15",
     "reflexbox": "^4.0.5"
